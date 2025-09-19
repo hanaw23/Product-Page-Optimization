@@ -71,8 +71,6 @@ export const HeadNavigationProvider = ({ children }: { children: React.ReactNode
     }
   }, [filterName]);
 
-  console.log();
-
   return (
     <HeadNavigationContext.Provider value={{ data, isLoading, categoryFilter, setCategoryFilter }}>
       <div className="fixed z-[999] bg-white w-full top-0 shadow-lg shadow-slate-600/10 px-6">
