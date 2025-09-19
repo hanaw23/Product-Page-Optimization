@@ -7,37 +7,35 @@ export const productService = createApi({
   reducerPath: "productService",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getAllProduct: builder.query<RecipeListResponse, { limit?: number; skip?: number; select?: string }>({
-      query: ({ limit, skip, select }) => {
+    getAllProducts: builder.query<ProductListResponse, { limit?: number; skip?: number; select?: string }>({
+      query: ({ limit, skip }) => {
         const params = new URLSearchParams();
 
         if (limit !== undefined) params.append("limit", limit.toString());
         if (skip !== undefined) params.append("skip", skip.toString());
-        if (select) params.append("select", select);
 
-        return `${PRODUCT_URL_PATH.list_recipes}?${params.toString()}`;
+        return `${PRODUCT_URL_PATH.list_products}?${params.toString()}`;
       },
     }),
-    getSearchAllProduct: builder.query<RecipeListResponse, { search: string; select?: string }>({
-      query: ({ search, select }) => {
+    getSearchAllProducts: builder.query<ProductListResponse, { search: string; select?: string }>({
+      query: ({ search }) => {
         const params = new URLSearchParams();
 
         if (search) params.append("q", search);
-        if (select) params.append("select", select);
 
-        return `${PRODUCT_URL_PATH.list_recipes}/search?${params.toString()}`;
+        return `${PRODUCT_URL_PATH.list_products}/search?${params.toString()}`;
       },
     }),
-    getAllProductTags: builder.query<Array<string>, void>({
-      query: () => PRODUCT_URL_PATH.list_recipe_tags,
+    getAllProductCategories: builder.query<Array<string>, void>({
+      query: () => PRODUCT_URL_PATH.list_products_category,
     }),
-    getDetailProductById: builder.query<RecipeDetailResponse, number>({
-      query: (id: number) => PRODUCT_URL_PATH.detail_recipes(id),
+    getDetailProductById: builder.query<ProductDetailResponse, number>({
+      query: (id: number) => PRODUCT_URL_PATH.detail_product(id),
     }),
-    getListProductByTags: builder.query<RecipeListResponse, string>({
-      query: (tag: string) => PRODUCT_URL_PATH.list_recipes_by_tags(tag),
+    getListProductsByCategories: builder.query<ProductListResponse, string>({
+      query: (tag: string) => PRODUCT_URL_PATH.list_products_by_category(tag),
     }),
   }),
 });
 
-export const { useGetAllRecipesQuery, useLazyGetAllRecipesQuery, useLazyGetAllRecipeTagsQuery, useLazyGetListRecipesByTagsQuery, useLazyGetDetailRecipeByIdQuery, useLazyGetSearchAllRecipesQuery } = recipeService;
+export const { useGetAllProductsQuery, useLazyGetAllProductsQuery, useLazyGetAllProductCategoriesQuery, useLazyGetListProductsByCategoriesQuery, useLazyGetDetailProductByIdQuery, useLazyGetSearchAllProductsQuery } = productService;
