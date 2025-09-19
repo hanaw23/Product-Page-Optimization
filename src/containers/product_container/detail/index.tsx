@@ -2,17 +2,14 @@
 
 import Image from "next/image";
 import { useEffect, useContext, useState } from "react";
-import { HeadNavigationContext, ModalImageContext } from "@product-page-opt/context";
-import { useSearchParams, useRouter } from "next/navigation";
+import { ModalImageContext } from "@product-page-opt/context";
+import { useSearchParams } from "next/navigation";
 import { useLazyGetDetailProductByIdQuery } from "@product-page-opt/services/product_service";
 import { LoadingSpinnerComponent } from "@product-page-opt/components";
-import { page_names } from "@product-page-opt/constants";
 
 const ProductDetailContainer = () => {
-  const router = useRouter();
-  const filterContext = useContext(HeadNavigationContext);
   const modalImageContext = useContext(ModalImageContext);
-  const { setCategoryFilter } = filterContext;
+
   const { setImageModal, setOpenModalImage } = modalImageContext;
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
@@ -31,11 +28,6 @@ const ProductDetailContainer = () => {
       setInitialLoading(false);
     }
   }, [isLoading]);
-
-  const handleNavigateCategoryFilter = (categoryName: string) => {
-    router.push(`${page_names.product_page}?filter=${categoryName}`);
-    setCategoryFilter(categoryName);
-  };
 
   const handleOpenImageModalPreview = () => {
     setOpenModalImage(true);
@@ -62,7 +54,7 @@ const ProductDetailContainer = () => {
                   <div className="my-3">
                     <div className="flex flex-wrap gap-2">
                       {data?.tags?.map((item, index) => (
-                        <div key={index} className="bg-slate-100 p-2 rounded-xl shadow-sm text-xs hover:bg-[#f2683a] hover:text-white transition cursor-pointer" onClick={() => handleNavigateCategoryFilter(item)}>
+                        <div key={index} className="bg-slate-100 p-2 rounded-xl shadow-sm text-xs hover:bg-[#f2683a] hover:text-white transition cursor-pointer">
                           #{item}
                         </div>
                       ))}
