@@ -35,6 +35,7 @@ const SearchTextInput = (props: SearchTextInputProps) => {
   const [data, setData] = useState<ProductData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [openOptionSearch, setOpenOpetionSearch] = useState<boolean>(false);
   const debouncedFetchRef = useRef<((query: string) => void) | null>(null);
 
   useEffect(() => {
@@ -63,6 +64,8 @@ const SearchTextInput = (props: SearchTextInputProps) => {
 
   const navigatePage = (id?: number, title?: string) => {
     router.push(`/${page_names.product_detail_page}?id=${id}&title=${title}`);
+    setOpenOpetionSearch(false);
+    setValue("");
   };
 
   const renderOptionsDataSearch = useMemo(() => {
@@ -70,6 +73,7 @@ const SearchTextInput = (props: SearchTextInputProps) => {
 
     const showResults = data?.length > 0 && !isLoading;
     const showNoResults = !isLoading && value && data?.length === 0;
+    setOpenOpetionSearch(true);
 
     return (
       <div className="absolute top-full left-0 w-full mt-1 z-[999]">
@@ -172,7 +176,7 @@ const SearchTextInput = (props: SearchTextInputProps) => {
       </div>
 
       {/* Dropdown Option Search*/}
-      {renderOptionsDataSearch}
+      {openOptionSearch && renderOptionsDataSearch}
 
       {/* Filter */}
       {openFilter && <>{renderOptionsFilter}</>}

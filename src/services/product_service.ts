@@ -33,7 +33,7 @@ export const productService = createApi({
       query: (id: number) => PRODUCT_URL_PATH.detail_product(id),
     }),
     getListProductsByCategories: builder.query<ProductListResponse, string>({
-      query: (tag: string) => PRODUCT_URL_PATH.list_products_by_category(tag),
+      query: (category: string) => PRODUCT_URL_PATH.list_products_by_category(category),
     }),
   }),
 });

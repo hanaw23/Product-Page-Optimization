@@ -19,7 +19,6 @@ const ProductDetailContainer = () => {
   const [productDetailTrigger, { data, isLoading }] = useLazyGetDetailProductByIdQuery();
 
   const [initialLoading, setInitialLoading] = useState(true);
-  console.log(data, "ini");
 
   useEffect(() => {
     if (productId) {
